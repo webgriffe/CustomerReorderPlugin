@@ -14,7 +14,6 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\PromotionInterface;
-use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Sylius\CustomerReorderPlugin\Checker\OrderCustomerRelationCheckerInterface;
 use Sylius\CustomerReorderPlugin\Factory\OrderFactoryInterface;
 use Sylius\CustomerReorderPlugin\Reorder\Reorderer;
@@ -29,7 +28,6 @@ final class ReordererSpec extends ObjectBehavior
     public function let(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
-        OrderProcessorInterface $orderProcessor,
         ReorderEligibilityChecker $reorderEligibilityChecker,
         ReorderEligibilityCheckerResponseProcessorInterface $reorderEligibilityCheckerResponseProcessor,
         OrderCustomerRelationCheckerInterface $orderCustomerRelationChecker,
@@ -37,7 +35,6 @@ final class ReordererSpec extends ObjectBehavior
         $this->beConstructedWith(
             $orderFactory,
             $entityManager,
-            $orderProcessor,
             $reorderEligibilityChecker,
             $reorderEligibilityCheckerResponseProcessor,
             $orderCustomerRelationChecker,

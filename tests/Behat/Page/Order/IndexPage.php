@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\CustomerReorderPlugin\Behat\Page\Order;
 
 use Behat\Mink\Element\NodeElement;
+use Exception;
 use Sylius\Behat\Page\Shop\Account\Order\IndexPage as BaseIndexPage;
 
 final class IndexPage extends BaseIndexPage implements IndexPageInterface
@@ -16,7 +17,7 @@ final class IndexPage extends BaseIndexPage implements IndexPageInterface
         $reorderButton = $orderData->find('css', sprintf('td button:contains("%s")', 'Reorder'));
 
         if (null === $reorderButton) {
-            throw new \Exception(sprintf('There is no reorder button next to order %s', $orderNumber));
+            throw new Exception(sprintf('There is no reorder button next to order %s', $orderNumber));
         }
 
         $reorderButton->click();
@@ -36,7 +37,7 @@ final class IndexPage extends BaseIndexPage implements IndexPageInterface
         $orderData = $this->getSession()->getPage()->find('css', sprintf('tr:contains("%s")', $orderNumber));
 
         if (null === $orderData) {
-            throw new \Exception(sprintf('There is no order %s on the orders list', $orderNumber));
+            throw new Exception(sprintf('There is no order %s on the orders list', $orderNumber));
         }
 
         return $orderData;

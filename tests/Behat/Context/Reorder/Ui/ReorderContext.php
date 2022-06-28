@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\CustomerReorderPlugin\Behat\Context\Reorder\Ui;
 
 use Behat\Behat\Context\Context;
-use Behat\Mink\Session;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Page\Shop\Checkout\AddressPageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -20,53 +19,16 @@ use Webmozart\Assert\Assert;
 
 final class ReorderContext implements Context
 {
-    /** @var Session */
-    private $session;
-
-    /** @var ReorderEligibilityConstraintMessageFormatterInterface */
-    private $reorderEligibilityConstraintMessageFormatter;
-
-    /** @var SelectShippingPageInterface */
-    private $selectShippingPage;
-
-    /** @var SelectPaymentPageInterface */
-    private $selectPaymentPage;
-
-    /** @var AddressPageInterface */
-    private $addressPage;
-
-    /** @var SummaryPageInterface */
-    private $summaryPage;
-
-    /** @var IndexPageInterface */
-    private $orderIndexPage;
-
-    /** @var ProductVariantResolverInterface */
-    private $defaultVariantResolver;
-
-    /** @var ObjectManager */
-    private $objectManager;
-
     public function __construct(
-        Session $session,
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
-        SelectShippingPageInterface $selectShippingPage,
-        SelectPaymentPageInterface $selectPaymentPage,
-        AddressPageInterface $addressPage,
-        SummaryPageInterface $summaryPage,
-        IndexPageInterface $orderIndexPage,
-        ProductVariantResolverInterface $productVariantResolver,
-        ObjectManager $objectManager,
+        private ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
+        private SelectShippingPageInterface $selectShippingPage,
+        private SelectPaymentPageInterface $selectPaymentPage,
+        private AddressPageInterface $addressPage,
+        private SummaryPageInterface $summaryPage,
+        private IndexPageInterface $orderIndexPage,
+        private ProductVariantResolverInterface $defaultVariantResolver,
+        private EntityManagerInterface $objectManager,
     ) {
-        $this->session = $session;
-        $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
-        $this->selectShippingPage = $selectShippingPage;
-        $this->selectPaymentPage = $selectPaymentPage;
-        $this->addressPage = $addressPage;
-        $this->summaryPage = $summaryPage;
-        $this->orderIndexPage = $orderIndexPage;
-        $this->defaultVariantResolver = $productVariantResolver;
-        $this->objectManager = $objectManager;
     }
 
     /**

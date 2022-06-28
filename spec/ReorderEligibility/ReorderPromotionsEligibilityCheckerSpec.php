@@ -17,25 +17,25 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\Eligibili
 
 final class ReorderPromotionsEligibilityCheckerSpec extends ObjectBehavior
 {
-    function let(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter
+    public function let(
+        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ): void {
         $this->beConstructedWith($reorderEligibilityConstraintMessageFormatter);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ReorderPromotionsEligibilityChecker::class);
     }
 
-    function it_implements_reorder_eligibility_checker_interface(): void
+    public function it_implements_reorder_eligibility_checker_interface(): void
     {
         $this->shouldImplement(ReorderEligibilityChecker::class);
     }
 
-    function it_returns_positive_result_when_there_are_no_reorder_items(
+    public function it_returns_positive_result_when_there_are_no_reorder_items(
         OrderInterface $order,
-        OrderInterface $reorder
+        OrderInterface $reorder,
     ): void {
         $reorder->getItems()->willReturn(new ArrayCollection());
 
@@ -43,12 +43,12 @@ final class ReorderPromotionsEligibilityCheckerSpec extends ObjectBehavior
         $response->shouldBeEqualTo([]);
     }
 
-    function it_returns_positive_result_when_the_same_promotions_are_applied(
+    public function it_returns_positive_result_when_the_same_promotions_are_applied(
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $reorderItem,
         PromotionInterface $firstPromotion,
-        PromotionInterface $secondPromotion
+        PromotionInterface $secondPromotion,
     ): void {
         $reorder->getItems()->willReturn(new ArrayCollection([
             $reorderItem->getWrappedObject(),
@@ -68,13 +68,13 @@ final class ReorderPromotionsEligibilityCheckerSpec extends ObjectBehavior
         $response->shouldBeEqualTo([]);
     }
 
-    function it_returns_violation_message_when_some_promotions_are_not_applied(
+    public function it_returns_violation_message_when_some_promotions_are_not_applied(
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $reorderItem,
         PromotionInterface $firstPromotion,
         PromotionInterface $secondPromotion,
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter
+        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ): void {
         $reorder->getItems()->willReturn(new ArrayCollection([
             $reorderItem->getWrappedObject(),
@@ -99,7 +99,7 @@ final class ReorderPromotionsEligibilityCheckerSpec extends ObjectBehavior
             EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED,
             [
                 '%promotion_names%' => 'test_promotion_01, test_promotion_02',
-            ]
+            ],
         );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);

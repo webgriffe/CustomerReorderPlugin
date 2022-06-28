@@ -13,22 +13,22 @@ use Sylius\CustomerReorderPlugin\ReorderProcessing\ReorderProcessor;
 
 final class ReorderDataProviderSpec extends ObjectBehavior
 {
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldBeAnInstanceOf(ReorderDataProvider::class);
     }
 
-    function it_implements_reorder_processor_interface(): void
+    public function it_implements_reorder_processor_interface(): void
     {
         $this->shouldImplement(ReorderProcessor::class);
     }
 
-    function it_copies_basic_order_data_to_reorder_instance(
+    public function it_copies_basic_order_data_to_reorder_instance(
         OrderInterface $order,
         OrderInterface $reorder,
         CustomerInterface $customer,
         AddressInterface $shippingAddress,
-        AddressInterface $billingAddress
+        AddressInterface $billingAddress,
     ): void {
         $order->getCustomer()->willReturn($customer);
         $order->getCurrencyCode()->willReturn('USD');

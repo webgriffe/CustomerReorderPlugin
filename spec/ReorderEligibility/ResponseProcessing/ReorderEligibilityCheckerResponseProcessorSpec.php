@@ -14,27 +14,27 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ReorderEligibilityCheckerResponseProcessorSpec extends ObjectBehavior
 {
-    function let(Session $session): void
+    public function let(Session $session): void
     {
         $this->beConstructedWith($session);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ReorderEligibilityCheckerResponseProcessor::class);
     }
 
-    function it_implements_reorder_eligibility_checker_response_processor_interface(): void
+    public function it_implements_reorder_eligibility_checker_response_processor_interface(): void
     {
         $this->shouldImplement(ReorderEligibilityCheckerResponseProcessorInterface::class);
     }
 
-    function it_adds_flash_bag_messages_based_on_given_array(
+    public function it_adds_flash_bag_messages_based_on_given_array(
         ReorderEligibilityCheckerResponse $firstResponse,
         ReorderEligibilityCheckerResponse $secondResponse,
         ReorderEligibilityCheckerResponse $thirdResponse,
         Session $session,
-        FlashBagInterface $flashBag
+        FlashBagInterface $flashBag,
     ): void {
         $firstResponse->getMessage()->willReturn(EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED);
         $firstResponse->getParameters()->willReturn(['%product_names%' => 'test_product_01']);

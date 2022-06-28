@@ -16,26 +16,26 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\Eligibili
 
 final class ReorderItemPricesEligibilityCheckerSpec extends ObjectBehavior
 {
-    function let(ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter)
+    public function let(ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter)
     {
         $this->beConstructedWith($reorderEligibilityConstraintMessageFormatter);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(ReorderItemPricesEligibilityChecker::class);
     }
 
-    function it_implements_reorder_eligibility_checker_interface()
+    public function it_implements_reorder_eligibility_checker_interface()
     {
         $this->shouldImplement(ReorderEligibilityChecker::class);
     }
 
-    function it_returns_positive_result_when_prices_are_the_same(
+    public function it_returns_positive_result_when_prices_are_the_same(
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $firstOrderItem,
-        OrderItemInterface $secondOrderItem
+        OrderItemInterface $secondOrderItem,
     ): void {
         $order->getItems()->willReturn(new ArrayCollection([
             $firstOrderItem->getWrappedObject(),
@@ -57,12 +57,12 @@ final class ReorderItemPricesEligibilityCheckerSpec extends ObjectBehavior
         $response->shouldBeEqualTo([]);
     }
 
-    function it_returns_violation_message_when_some_prices_are_different(
+    public function it_returns_violation_message_when_some_prices_are_different(
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $firstOrderItem,
         OrderItemInterface $secondOrderItem,
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter
+        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ): void {
         $order->getItems()->willReturn(new ArrayCollection([
             $firstOrderItem->getWrappedObject(),
@@ -89,7 +89,7 @@ final class ReorderItemPricesEligibilityCheckerSpec extends ObjectBehavior
             EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED,
             [
                 '%product_names%' => 'test_product_name_01, test_product_name_02',
-            ]
+            ],
         );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);

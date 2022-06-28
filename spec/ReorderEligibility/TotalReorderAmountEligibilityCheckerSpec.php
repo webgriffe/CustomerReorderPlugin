@@ -14,24 +14,24 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\TotalReorderAmountEligibilit
 
 final class TotalReorderAmountEligibilityCheckerSpec extends ObjectBehavior
 {
-    function let(MoneyFormatterInterface $moneyFormatter): void
+    public function let(MoneyFormatterInterface $moneyFormatter): void
     {
         $this->beConstructedWith($moneyFormatter);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(TotalReorderAmountEligibilityChecker::class);
     }
 
-    function it_implements_reorder_eligibility_checker_interface(): void
+    public function it_implements_reorder_eligibility_checker_interface(): void
     {
         $this->shouldImplement(ReorderEligibilityChecker::class);
     }
 
-    function it_returns_positive_result_when_total_amounts_are_the_same(
+    public function it_returns_positive_result_when_total_amounts_are_the_same(
         OrderInterface $order,
-        OrderInterface $reorder
+        OrderInterface $reorder,
     ): void {
         $order->getTotal()->willReturn(100);
         $reorder->getTotal()->willReturn(100);
@@ -40,10 +40,10 @@ final class TotalReorderAmountEligibilityCheckerSpec extends ObjectBehavior
         $response->shouldBeEqualTo([]);
     }
 
-    function it_returns_violation_message_when_total_amounts_differ(
+    public function it_returns_violation_message_when_total_amounts_differ(
         OrderInterface $order,
         OrderInterface $reorder,
-        MoneyFormatterInterface $moneyFormatter
+        MoneyFormatterInterface $moneyFormatter,
     ): void {
         $order->getTotal()->willReturn(100);
         $order->getCurrencyCode()->willReturn('USD');
@@ -54,8 +54,8 @@ final class TotalReorderAmountEligibilityCheckerSpec extends ObjectBehavior
         $response = new ReorderEligibilityCheckerResponse(
             EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED,
             [
-                '%order_total%' => '$100.00'
-            ]
+                '%order_total%' => '$100.00',
+            ],
         );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);

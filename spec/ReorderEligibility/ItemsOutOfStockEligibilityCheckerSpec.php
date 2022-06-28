@@ -18,31 +18,31 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\Eligibili
 
 final class ItemsOutOfStockEligibilityCheckerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ): void {
         $this->beConstructedWith($reorderEligibilityConstraintMessageFormatter, $availabilityChecker);
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldBeAnInstanceOf(ItemsOutOfStockEligibilityChecker::class);
     }
 
-    function it_implements_reorder_eligibility_checker_interface(): void
+    public function it_implements_reorder_eligibility_checker_interface(): void
     {
         $this->shouldImplement(ReorderEligibilityChecker::class);
     }
 
-    function it_returns_positive_result_when_all_reorder_items_are_on_hand(
+    public function it_returns_positive_result_when_all_reorder_items_are_on_hand(
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $firstOrderItem,
         OrderItemInterface $secondOrderItem,
         ProductVariantInterface $firstProductVariant,
         ProductVariantInterface $secondProductVariant,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ): void {
         $order->getItems()->willReturn(new ArrayCollection([
             $firstOrderItem->getWrappedObject(),
@@ -59,7 +59,7 @@ final class ItemsOutOfStockEligibilityCheckerSpec extends ObjectBehavior
         $response->shouldBeEqualTo([]);
     }
 
-    function it_returns_violation_message_when_some_reorder_items_are_out_of_stock(
+    public function it_returns_violation_message_when_some_reorder_items_are_out_of_stock(
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $firstOrderItem,
@@ -67,7 +67,7 @@ final class ItemsOutOfStockEligibilityCheckerSpec extends ObjectBehavior
         ProductVariantInterface $firstProductVariant,
         ProductVariantInterface $secondProductVariant,
         ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ): void {
         $order->getItems()->willReturn(new ArrayCollection([
             $firstOrderItem->getWrappedObject(),
@@ -90,8 +90,8 @@ final class ItemsOutOfStockEligibilityCheckerSpec extends ObjectBehavior
         $response = new ReorderEligibilityCheckerResponse(
             EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK,
             [
-                '%order_items%' => 'test_name_01, test_name_02'
-            ]
+                '%order_items%' => 'test_name_01, test_name_02',
+            ],
         );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);

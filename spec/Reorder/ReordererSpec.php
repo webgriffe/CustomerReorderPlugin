@@ -6,7 +6,7 @@ namespace spec\Sylius\CustomerReorderPlugin\Reorder;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Nette\InvalidStateException;
+use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -26,13 +26,13 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\ReorderEl
 
 final class ReordererSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
         OrderProcessorInterface $orderProcessor,
         ReorderEligibilityChecker $reorderEligibilityChecker,
         ReorderEligibilityCheckerResponseProcessorInterface $reorderEligibilityCheckerResponseProcessor,
-        OrderCustomerRelationCheckerInterface $orderCustomerRelationChecker
+        OrderCustomerRelationCheckerInterface $orderCustomerRelationChecker,
     ): void {
         $this->beConstructedWith(
             $orderFactory,
@@ -40,21 +40,21 @@ final class ReordererSpec extends ObjectBehavior
             $orderProcessor,
             $reorderEligibilityChecker,
             $reorderEligibilityCheckerResponseProcessor,
-            $orderCustomerRelationChecker
+            $orderCustomerRelationChecker,
         );
     }
 
-    function it_is_initializable(): void
+    public function it_is_initializable(): void
     {
         $this->shouldBeAnInstanceOf(Reorderer::class);
     }
 
-    function it_implements_reorderer_interface(): void
+    public function it_implements_reorderer_interface(): void
     {
         $this->shouldImplement(ReordererInterface::class);
     }
 
-    function it_creates_and_persists_reorder_from_existing_order(
+    public function it_creates_and_persists_reorder_from_existing_order(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
         ReorderEligibilityChecker $reorderEligibilityChecker,
@@ -64,7 +64,7 @@ final class ReordererSpec extends ObjectBehavior
         OrderInterface $order,
         OrderInterface $reorder,
         OrderItemInterface $firstOrderItem,
-        OrderItemInterface $secondOrderItem
+        OrderItemInterface $secondOrderItem,
     ): void {
         $order->getTotal()->willReturn(100);
         $order->getCurrencyCode()->willReturn('USD');
@@ -87,7 +87,7 @@ final class ReordererSpec extends ObjectBehavior
         $this->reorder($order, $channel, $customer);
     }
 
-    function it_checks_if_orders_totals_differ(
+    public function it_checks_if_orders_totals_differ(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
         ReorderEligibilityChecker $reorderEligibilityChecker,
@@ -99,7 +99,7 @@ final class ReordererSpec extends ObjectBehavior
         ArrayCollection $promotions,
         ReorderEligibilityCheckerResponse $reorderEligibilityCheckerResponse,
         OrderItemInterface $firstOrderItem,
-        OrderItemInterface $secondOrderItem
+        OrderItemInterface $secondOrderItem,
     ): void {
         $order->getTotal()->willReturn(100);
         $order->getCurrencyCode()->willReturn('USD');
@@ -116,7 +116,7 @@ final class ReordererSpec extends ObjectBehavior
         ]));
 
         $reorderEligibilityCheckerResponse->getMessage()->willReturn(
-            EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED
+            EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED,
         );
         $reorderEligibilityCheckerResponse->getParameters()->willReturn(['%order_total%' => '$1.00']);
 
@@ -129,7 +129,7 @@ final class ReordererSpec extends ObjectBehavior
         $this->reorder($order, $channel, $customer);
     }
 
-    function it_checks_if_promotion_is_no_longer_available(
+    public function it_checks_if_promotion_is_no_longer_available(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
         ReorderEligibilityChecker $reorderEligibilityChecker,
@@ -142,7 +142,7 @@ final class ReordererSpec extends ObjectBehavior
         PromotionInterface $secondPromotion,
         ReorderEligibilityCheckerResponse $reorderEligibilityCheckerResponse,
         OrderItemInterface $firstOrderItem,
-        OrderItemInterface $secondOrderItem
+        OrderItemInterface $secondOrderItem,
     ): void {
         $order->getPromotions()->willReturn(new ArrayCollection([
             $firstPromotion->getWrappedObject(),
@@ -162,7 +162,7 @@ final class ReordererSpec extends ObjectBehavior
         ]));
 
         $reorderEligibilityCheckerResponse->getMessage()->willReturn(
-            EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED
+            EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED,
         );
         $reorderEligibilityCheckerResponse->getParameters()->willReturn([
             '%promotion_names%' => 'test_promotion_01, test_promotion_02',
@@ -177,7 +177,7 @@ final class ReordererSpec extends ObjectBehavior
         $this->reorder($order, $channel, $customer);
     }
 
-    function it_checks_if_price_of_any_item_has_changed(
+    public function it_checks_if_price_of_any_item_has_changed(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
         ReorderEligibilityChecker $reorderEligibilityChecker,
@@ -188,7 +188,7 @@ final class ReordererSpec extends ObjectBehavior
         OrderInterface $reorder,
         OrderItemInterface $firstOrderItem,
         OrderItemInterface $secondOrderItem,
-        ReorderEligibilityCheckerResponse $reorderEligibilityCheckerResponse
+        ReorderEligibilityCheckerResponse $reorderEligibilityCheckerResponse,
     ): void {
         $firstOrderItem->getUnitPrice()->willReturn(100);
         $firstOrderItem->getVariantName()->willReturn('variant_name_01');
@@ -209,7 +209,7 @@ final class ReordererSpec extends ObjectBehavior
         ]));
 
         $reorderEligibilityCheckerResponse->getMessage()->willReturn(
-            EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED
+            EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED,
         );
 
         $reorderEligibilityCheckerResponse->getParameters()->willReturn([
@@ -225,7 +225,7 @@ final class ReordererSpec extends ObjectBehavior
         $this->reorder($order, $channel, $customer);
     }
 
-    function it_checks_if_any_item_is_out_of_stock(
+    public function it_checks_if_any_item_is_out_of_stock(
         OrderFactoryInterface $orderFactory,
         EntityManagerInterface $entityManager,
         ReorderEligibilityChecker $reorderEligibilityChecker,
@@ -238,7 +238,7 @@ final class ReordererSpec extends ObjectBehavior
         OrderItemInterface $secondOrderItem,
         ProductVariantInterface $firstProductVariant,
         ProductVariantInterface $secondProductVariant,
-        ReorderEligibilityCheckerResponse $reorderEligibilityCheckerResponse
+        ReorderEligibilityCheckerResponse $reorderEligibilityCheckerResponse,
     ): void {
         $firstProductVariant->isTracked()->willReturn(true);
         $firstProductVariant->getOnHand()->willReturn(5);
@@ -262,7 +262,7 @@ final class ReordererSpec extends ObjectBehavior
         ]));
 
         $reorderEligibilityCheckerResponse->getMessage()->willReturn(
-            EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK
+            EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK,
         );
         $reorderEligibilityCheckerResponse->getParameters()->willReturn([
             '%order_items%' => 'product_variant_02',
@@ -277,12 +277,12 @@ final class ReordererSpec extends ObjectBehavior
         $this->reorder($order, $channel, $customer);
     }
 
-    function it_does_not_create_reorder_when_order_does_not_belong_to_given_customer(
+    public function it_does_not_create_reorder_when_order_does_not_belong_to_given_customer(
         OrderInterface $order,
         ChannelInterface $channel,
         CustomerInterface $firstCustomer,
         CustomerInterface $secondCustomer,
-        OrderCustomerRelationCheckerInterface $orderCustomerRelationChecker
+        OrderCustomerRelationCheckerInterface $orderCustomerRelationChecker,
     ): void {
         $firstCustomer->getId()->willReturn('1');
         $secondCustomer->getId()->willReturn('2');
@@ -292,7 +292,7 @@ final class ReordererSpec extends ObjectBehavior
         $orderCustomerRelationChecker->wasOrderPlacedByCustomer($order, $secondCustomer)->shouldBeCalled();
 
         $this
-            ->shouldThrow(InvalidStateException::class)
+            ->shouldThrow(InvalidArgumentException::class)
             ->during('reorder', [$order, $channel, $secondCustomer])
         ;
     }

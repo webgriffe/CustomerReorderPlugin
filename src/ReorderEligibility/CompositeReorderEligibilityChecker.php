@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 final class CompositeReorderEligibilityChecker implements ReorderEligibilityChecker
 {
     /** @var PriorityQueue<ReorderEligibilityChecker, int> */
-    private $eligibilityCheckers;
+    private PriorityQueue $eligibilityCheckers;
 
     public function __construct()
     {

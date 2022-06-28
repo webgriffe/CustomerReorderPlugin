@@ -10,13 +10,9 @@ use Webmozart\Assert\Assert;
 
 final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChecker
 {
-    /** @var ReorderEligibilityConstraintMessageFormatterInterface */
-    private $reorderEligibilityConstraintMessageFormatter;
-
     public function __construct(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
+        private ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ) {
-        $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
     }
 
     public function check(OrderInterface $order, OrderInterface $reorder): array
@@ -44,7 +40,7 @@ final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChe
             }
 
             if ($orderProductNamesToTotal[$productName] !== $reorderProductNamesToTotal[$productName]) {
-                array_push($orderItemsWithChangedPrice, $productName);
+                $orderItemsWithChangedPrice[] = $productName;
             }
         }
 

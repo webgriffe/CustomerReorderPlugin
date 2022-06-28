@@ -10,12 +10,8 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\Eligibili
 
 final class TotalReorderAmountEligibilityChecker implements ReorderEligibilityChecker
 {
-    /** @var MoneyFormatterInterface */
-    private $moneyFormatter;
-
-    public function __construct(MoneyFormatterInterface $moneyFormatter)
+    public function __construct(private MoneyFormatterInterface $moneyFormatter)
     {
-        $this->moneyFormatter = $moneyFormatter;
     }
 
     public function check(OrderInterface $order, OrderInterface $reorder): array

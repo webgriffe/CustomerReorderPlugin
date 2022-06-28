@@ -11,18 +11,10 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\Eligibili
 
 final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityChecker
 {
-    /** @var ReorderEligibilityConstraintMessageFormatterInterface */
-    private $reorderEligibilityConstraintMessageFormatter;
-
-    /** @var AvailabilityCheckerInterface */
-    private $availabilityChecker;
-
     public function __construct(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
-        AvailabilityCheckerInterface $availabilityChecker,
+        private ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
+        private AvailabilityCheckerInterface $availabilityChecker,
     ) {
-        $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
-        $this->availabilityChecker = $availabilityChecker;
     }
 
     public function check(OrderInterface $order, OrderInterface $reorder): array

@@ -10,13 +10,9 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\Eligibili
 
 final class ReorderPromotionsEligibilityChecker implements ReorderEligibilityChecker
 {
-    /** @var ReorderEligibilityConstraintMessageFormatterInterface */
-    private $reorderEligibilityConstraintMessageFormatter;
-
     public function __construct(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
+        private ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ) {
-        $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
     }
 
     public function check(OrderInterface $order, OrderInterface $reorder): array
@@ -32,7 +28,7 @@ final class ReorderPromotionsEligibilityChecker implements ReorderEligibilityChe
         /** @var PromotionInterface $promotion */
         foreach ($order->getPromotions()->getValues() as $promotion) {
             if (!in_array($promotion, $reorder->getPromotions()->getValues(), true)) {
-                array_push($disabledPromotions, $promotion->getName());
+                $disabledPromotions[] = $promotion->getName();
             }
         }
 

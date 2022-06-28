@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 final class CompositeReorderProcessor implements ReorderProcessor
 {
     /** @var PriorityQueue<ReorderProcessor, int> */
-    private $reorderProcessors;
+    private PriorityQueue $reorderProcessors;
 
     public function __construct()
     {

@@ -11,16 +11,8 @@ use Sylius\CustomerReorderPlugin\ReorderProcessing\ReorderProcessor;
 
 final class OrderFactory implements OrderFactoryInterface
 {
-    /** @var FactoryInterface */
-    private $baseOrderFactory;
-
-    /** @var ReorderProcessor */
-    private $reorderProcessor;
-
-    public function __construct(FactoryInterface $baseOrderFactory, ReorderProcessor $reorderProcessor)
+    public function __construct(private FactoryInterface $baseOrderFactory, private ReorderProcessor $reorderProcessor)
     {
-        $this->baseOrderFactory = $baseOrderFactory;
-        $this->reorderProcessor = $reorderProcessor;
     }
 
     public function createFromExistingOrder(OrderInterface $order, ChannelInterface $channel): OrderInterface

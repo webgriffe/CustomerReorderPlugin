@@ -1,0 +1,8 @@
+sylius:
+    reorder:
+        items_out_of_stock: 'I seguenti articoli: %order_items% non sono disponibili, il totale dell''ordine è cambiato.'
+        items_price_changed: 'I prezzi dei prodotti: %product_names% è cambiato, il totale dell''ordine è cambiato.'
+        previous_order_total: 'Totale ordine originale: %order_total%.'
+        promotion_not_enabled: 'Le seguenti promozioni: %promotion_names% non sono più disponibili, il totale dell''ordine è cambiato.'
+        insufficient_quantity: 'I seguenti articoli: %order_items% non sono più disponibili nelle quantità aspettate,il totale dell''ordine è cambiato.'
+        none_of_items_is_available: 'Nessuno dei precedenti articoli dell''ordine è disponibile. Impossibile piazzare l''ordine.'

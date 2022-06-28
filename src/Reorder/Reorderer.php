@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Sylius\CustomerReorderPlugin\Checker\OrderCustomerRelationCheckerInterface;
 use Sylius\CustomerReorderPlugin\Factory\OrderFactoryInterface;
 use Sylius\CustomerReorderPlugin\ReorderEligibility\ReorderEligibilityChecker;
@@ -17,38 +16,13 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\ReorderEl
 
 final class Reorderer implements ReordererInterface
 {
-    /** @var OrderFactoryInterface */
-    private $orderFactory;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var OrderProcessorInterface */
-    private $orderProcessor;
-
-    /** @var ReorderEligibilityChecker */
-    private $reorderEligibilityChecker;
-
-    /** @var ReorderEligibilityCheckerResponseProcessorInterface */
-    private $reorderEligibilityCheckerResponseProcessor;
-
-    /** @var OrderCustomerRelationCheckerInterface */
-    private $orderCustomerRelationCheckerInterface;
-
     public function __construct(
-        OrderFactoryInterface $orderFactory,
-        EntityManagerInterface $entityManager,
-        OrderProcessorInterface $orderProcessor,
-        ReorderEligibilityChecker $reorderEligibilityChecker,
-        ReorderEligibilityCheckerResponseProcessorInterface $reorderEligibilityCheckerResponseProcessor,
-        OrderCustomerRelationCheckerInterface $orderCustomerRelationChecker,
+        private OrderFactoryInterface $orderFactory,
+        private EntityManagerInterface $entityManager,
+        private ReorderEligibilityChecker $reorderEligibilityChecker,
+        private ReorderEligibilityCheckerResponseProcessorInterface $reorderEligibilityCheckerResponseProcessor,
+        private OrderCustomerRelationCheckerInterface $orderCustomerRelationCheckerInterface,
     ) {
-        $this->orderFactory = $orderFactory;
-        $this->entityManager = $entityManager;
-        $this->orderProcessor = $orderProcessor;
-        $this->reorderEligibilityChecker = $reorderEligibilityChecker;
-        $this->reorderEligibilityCheckerResponseProcessor = $reorderEligibilityCheckerResponseProcessor;
-        $this->orderCustomerRelationCheckerInterface = $orderCustomerRelationChecker;
     }
 
     public function reorder(

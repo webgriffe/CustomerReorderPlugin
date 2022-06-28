@@ -12,7 +12,6 @@ use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
-use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\CustomerReorderPlugin\Reorder\ReordererInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,48 +21,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class CustomerReorderAction
 {
-    /** @var CartSessionStorage */
-    private $cartSessionStorage;
-
-    /** @var ChannelContextInterface */
-    private $channelContext;
-
-    /** @var CartContextInterface */
-    private $cartContext;
-
-    /** @var CustomerContextInterface */
-    private $customerContext;
-
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
-
-    /** @var ReordererInterface */
-    private $reorderer;
-
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
-
-    /** @var Session */
-    private $session;
-
     public function __construct(
-        CartSessionStorage $cartSessionStorage,
-        ChannelContextInterface $channelContext,
-        CartContextInterface $cartContext,
-        CustomerContextInterface $customerContext,
-        OrderRepositoryInterface $orderRepository,
-        ReordererInterface $reorderService,
-        UrlGeneratorInterface $urlGenerator,
-        Session $session,
+        private CartSessionStorage $cartSessionStorage,
+        private ChannelContextInterface $channelContext,
+        private CustomerContextInterface $customerContext,
+        private OrderRepositoryInterface $orderRepository,
+        private ReordererInterface $reorderer,
+        private UrlGeneratorInterface $urlGenerator,
+        private Session $session,
     ) {
-        $this->cartSessionStorage = $cartSessionStorage;
-        $this->channelContext = $channelContext;
-        $this->cartContext = $cartContext;
-        $this->customerContext = $customerContext;
-        $this->orderRepository = $orderRepository;
-        $this->reorderer = $reorderService;
-        $this->urlGenerator = $urlGenerator;
-        $this->session = $session;
     }
 
     public function __invoke(Request $request): Response

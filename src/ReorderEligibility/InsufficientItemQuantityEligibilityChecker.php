@@ -10,13 +10,9 @@ use Webmozart\Assert\Assert;
 
 final class InsufficientItemQuantityEligibilityChecker implements ReorderEligibilityChecker
 {
-    /** @var ReorderEligibilityConstraintMessageFormatterInterface */
-    private $reorderEligibilityConstraintMessageFormatter;
-
     public function __construct(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
+        private ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ) {
-        $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
     }
 
     public function check(OrderInterface $order, OrderInterface $reorder): array
@@ -43,7 +39,7 @@ final class InsufficientItemQuantityEligibilityChecker implements ReorderEligibi
             }
 
             if ($orderProductNamesToQuantity[$productName] > $reorderProductNamesToQuantity[$productName]) {
-                array_push($insufficientItems, $productName);
+                $insufficientItems[] = $productName;
             }
         }
 

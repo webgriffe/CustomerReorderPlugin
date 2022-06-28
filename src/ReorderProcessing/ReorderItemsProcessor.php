@@ -14,28 +14,12 @@ use Webmozart\Assert\Assert;
 
 final class ReorderItemsProcessor implements ReorderProcessor
 {
-    /** @var OrderItemQuantityModifierInterface */
-    private $orderItemQuantityModifier;
-
-    /** @var OrderModifierInterface */
-    private $orderModifier;
-
-    /** @var AvailabilityCheckerInterface */
-    private $availabilityChecker;
-
-    /** @var FactoryInterface */
-    private $orderItemFactory;
-
     public function __construct(
-        OrderItemQuantityModifierInterface $orderItemQuantityModifier,
-        OrderModifierInterface $orderModifier,
-        AvailabilityCheckerInterface $availabilityChecker,
-        FactoryInterface $orderItemFactory,
+        private OrderItemQuantityModifierInterface $orderItemQuantityModifier,
+        private OrderModifierInterface $orderModifier,
+        private AvailabilityCheckerInterface $availabilityChecker,
+        private FactoryInterface $orderItemFactory,
     ) {
-        $this->orderItemQuantityModifier = $orderItemQuantityModifier;
-        $this->orderModifier = $orderModifier;
-        $this->availabilityChecker = $availabilityChecker;
-        $this->orderItemFactory = $orderItemFactory;
     }
 
     public function process(OrderInterface $order, OrderInterface $reorder): void

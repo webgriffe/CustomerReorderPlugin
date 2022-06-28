@@ -9,12 +9,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ReorderEligibilityCheckerResponseProcessor implements ReorderEligibilityCheckerResponseProcessorInterface
 {
-    /** @var Session */
-    private $session;
-
-    public function __construct(Session $session)
+    public function __construct(private Session $session)
     {
-        $this->session = $session;
     }
 
     public function process(array $responses): void

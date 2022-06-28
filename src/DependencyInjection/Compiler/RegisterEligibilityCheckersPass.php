@@ -14,7 +14,7 @@ final class RegisterEligibilityCheckersPass extends PrioritizedCompositeServiceP
             'Sylius\CustomerReorderPlugin\ReorderEligibility\CompositeReorderEligibilityChecker',
             'Sylius\CustomerReorderPlugin\ReorderEligibility\CompositeReorderEligibilityChecker',
             'sylius_customer_reorder_plugin.eligibility_checker',
-            'addChecker'
+            'addChecker',
         );
     }
 }

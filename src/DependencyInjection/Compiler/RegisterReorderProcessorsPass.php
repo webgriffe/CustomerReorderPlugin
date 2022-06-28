@@ -14,7 +14,7 @@ final class RegisterReorderProcessorsPass extends PrioritizedCompositeServicePas
             'Sylius\CustomerReorderPlugin\ReorderProcessing\CompositeReorderProcessor',
             'Sylius\CustomerReorderPlugin\ReorderProcessing\CompositeReorderProcessor',
             'sylius_customer_reorder_plugin.reorder_processor',
-            'addProcessor'
+            'addProcessor',
         );
     }
 }

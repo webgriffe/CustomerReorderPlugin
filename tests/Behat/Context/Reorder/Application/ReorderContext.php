@@ -26,7 +26,7 @@ final class ReorderContext implements Context
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         CustomerRepositoryInterface $customerRepository,
-        ReordererInterface $reorderer
+        ReordererInterface $reorderer,
     ) {
         $this->orderRepository = $orderRepository;
         $this->customerRepository = $customerRepository;
@@ -50,7 +50,7 @@ final class ReorderContext implements Context
             return;
         }
 
-        throw new \Exception("Reorder should fail");
+        throw new \Exception('Reorder should fail');
     }
 
     /**

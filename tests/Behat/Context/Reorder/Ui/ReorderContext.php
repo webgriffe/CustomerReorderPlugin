@@ -56,7 +56,7 @@ final class ReorderContext implements Context
         SummaryPageInterface $summaryPage,
         IndexPageInterface $orderIndexPage,
         ProductVariantResolverInterface $productVariantResolver,
-        ObjectManager $objectManager
+        ObjectManager $objectManager,
     ) {
         $this->session = $session;
         $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
@@ -104,9 +104,11 @@ final class ReorderContext implements Context
      */
     public function iShouldBeNotifiedThatProductIsOutOfStock(string ...$products): void
     {
-        $this->summaryPage->doesFlashMessageWithTextExists(sprintf(
+        $this->summaryPage->doesFlashMessageWithTextExists(
+            sprintf(
             'Following items: %s are out of stock, which have affected order total.',
-            $this->reorderEligibilityConstraintMessageFormatter->format($products))
+            $this->reorderEligibilityConstraintMessageFormatter->format($products),
+        ),
         );
     }
 
@@ -115,11 +117,11 @@ final class ReorderContext implements Context
      * @Then I should be notified that products :firstProduct, :secondProduct are not available in expected quantity
      */
     public function iShouldBeNotifiedThatUnitsOfProductWereAddedToCartInsteadOf(
-        string ...$products
+        string ...$products,
     ): void {
         $this->summaryPage->doesFlashMessageWithTextExists(sprintf(
             'Following items: %s are not available in expected quantity, which have affected order total.',
-            $this->reorderEligibilityConstraintMessageFormatter->format($products)
+            $this->reorderEligibilityConstraintMessageFormatter->format($products),
         ));
     }
 
@@ -128,9 +130,11 @@ final class ReorderContext implements Context
      */
     public function iShouldBeNotifiedThatOrderItemsPriceHasChanged(string $orderItemName): void
     {
-        $this->summaryPage->doesFlashMessageWithTextExists(sprintf(
+        $this->summaryPage->doesFlashMessageWithTextExists(
+            sprintf(
             'Prices of products: %s have changed, which have affected order total.',
-            $orderItemName)
+            $orderItemName,
+        ),
         );
     }
 
@@ -147,9 +151,11 @@ final class ReorderContext implements Context
      */
     public function iShouldBeNotifiedThatPromotionIsNoLongerEnabled(string $promotionName): void
     {
-        $this->summaryPage->doesFlashMessageWithTextExists(sprintf(
+        $this->summaryPage->doesFlashMessageWithTextExists(
+            sprintf(
             'Following promotions: %s are no longer enabled, which have affected order total.',
-            $promotionName)
+            $promotionName,
+        ),
         );
     }
 

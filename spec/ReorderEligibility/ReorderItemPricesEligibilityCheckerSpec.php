@@ -85,11 +85,12 @@ final class ReorderItemPricesEligibilityCheckerSpec extends ObjectBehavior
             'test_product_name_02',
         ])->willReturn('test_product_name_01, test_product_name_02');
 
-        $response = new ReorderEligibilityCheckerResponse();
-        $response->setMessage(EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED);
-        $response->setParameters([
-            '%product_names%' => 'test_product_name_01, test_product_name_02',
-        ]);
+        $response = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED,
+            [
+                '%product_names%' => 'test_product_name_01, test_product_name_02',
+            ]
+        );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);
     }

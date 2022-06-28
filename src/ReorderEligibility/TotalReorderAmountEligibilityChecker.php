@@ -28,12 +28,12 @@ final class TotalReorderAmountEligibilityChecker implements ReorderEligibilityCh
         $currencyCode = $order->getCurrencyCode();
         $formattedTotal = $this->moneyFormatter->format($order->getTotal(), $currencyCode);
 
-        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse();
-
-        $eligibilityCheckerResponse->setMessage(EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED);
-        $eligibilityCheckerResponse->setParameters([
-            '%order_total%' => $formattedTotal,
-        ]);
+        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED,
+            [
+                '%order_total%' => $formattedTotal,
+            ],
+        );
 
         return [$eligibilityCheckerResponse];
     }

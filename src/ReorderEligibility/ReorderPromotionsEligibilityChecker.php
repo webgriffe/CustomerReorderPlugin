@@ -14,14 +14,14 @@ final class ReorderPromotionsEligibilityChecker implements ReorderEligibilityChe
     private $reorderEligibilityConstraintMessageFormatter;
 
     public function __construct(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter
+        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ) {
         $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
     }
 
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
-        if (empty($reorder->getItems()->getValues()) ||
+        if (0 === count($reorder->getItems()->getValues()) ||
             $order->getPromotions()->getValues() === $reorder->getPromotions()->getValues()
         ) {
             return [];
@@ -36,12 +36,12 @@ final class ReorderPromotionsEligibilityChecker implements ReorderEligibilityChe
             }
         }
 
-        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse();
-
-        $eligibilityCheckerResponse->setMessage(EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED);
-        $eligibilityCheckerResponse->setParameters([
-            '%promotion_names%' => $this->reorderEligibilityConstraintMessageFormatter->format($disabledPromotions),
-        ]);
+        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED,
+            [
+                '%promotion_names%' => $this->reorderEligibilityConstraintMessageFormatter->format($disabledPromotions),
+            ],
+        );
 
         return [$eligibilityCheckerResponse];
     }

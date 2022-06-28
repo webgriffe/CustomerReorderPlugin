@@ -6,11 +6,12 @@ namespace Sylius\CustomerReorderPlugin\ReorderEligibility;
 
 class ReorderEligibilityCheckerResponse
 {
-    /** @var string */
-    private $message;
-
-    /** @var array */
-    private $parameters;
+    /** @param array<string, string> $parameters */
+    public function __construct(
+        private string $message,
+        private array $parameters,
+    ) {
+    }
 
     public function getMessage(): string
     {

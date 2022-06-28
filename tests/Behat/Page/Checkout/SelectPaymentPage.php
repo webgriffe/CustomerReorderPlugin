@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\CustomerReorderPlugin\Behat\Page\Checkout;
 
-use \Sylius\Behat\Page\Shop\Checkout\SelectPaymentPage as BaseSelectPaymentPage;
+use Sylius\Behat\Page\Shop\Checkout\SelectPaymentPage as BaseSelectPaymentPage;
 
 final class SelectPaymentPage extends BaseSelectPaymentPage implements SelectPaymentPageInterface
 {

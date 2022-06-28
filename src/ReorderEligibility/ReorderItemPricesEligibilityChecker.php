@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Sylius\CustomerReorderPlugin\ReorderEligibility;
 
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\EligibilityCheckerFailureResponses;
+use Webmozart\Assert\Assert;
 
 final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChecker
 {
@@ -14,7 +14,7 @@ final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChe
     private $reorderEligibilityConstraintMessageFormatter;
 
     public function __construct(
-        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter
+        ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
     ) {
         $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
     }
@@ -24,14 +24,16 @@ final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChe
         $orderProductNamesToTotal = [];
         $reorderProductNamesToTotal = [];
 
-        /** @var OrderItemInterface $orderItem */
         foreach ($order->getItems()->getValues() as $orderItem) {
-            $orderProductNamesToTotal[$orderItem->getProductName()] = $orderItem->getUnitPrice();
+            $productName = $orderItem->getProductName();
+            Assert::notNull($productName);
+            $orderProductNamesToTotal[$productName] = $orderItem->getUnitPrice();
         }
 
-        /** @var OrderItemInterface $reorderItem */
         foreach ($reorder->getItems()->getValues() as $reorderItem) {
-            $reorderProductNamesToTotal[$reorderItem->getProductName()] = $reorderItem->getUnitPrice();
+            $productName = $reorderItem->getProductName();
+            Assert::notNull($productName);
+            $reorderProductNamesToTotal[$productName] = $reorderItem->getUnitPrice();
         }
 
         $orderItemsWithChangedPrice = [];
@@ -46,16 +48,16 @@ final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChe
             }
         }
 
-        if (empty($orderItemsWithChangedPrice)) {
+        if (0 === count($orderItemsWithChangedPrice)) {
             return [];
         }
 
-        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse();
-
-        $eligibilityCheckerResponse->setMessage(EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED);
-        $eligibilityCheckerResponse->setParameters([
-            '%product_names%' => $this->reorderEligibilityConstraintMessageFormatter->format($orderItemsWithChangedPrice),
-        ]);
+        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::REORDER_ITEMS_PRICES_CHANGED,
+            [
+                '%product_names%' => $this->reorderEligibilityConstraintMessageFormatter->format($orderItemsWithChangedPrice),
+            ],
+        );
 
         return [$eligibilityCheckerResponse];
     }

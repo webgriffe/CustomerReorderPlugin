@@ -87,9 +87,12 @@ final class ItemsOutOfStockEligibilityCheckerSpec extends ObjectBehavior
             'test_name_02',
         ])->willReturn('test_name_01, test_name_02');
 
-        $response = new ReorderEligibilityCheckerResponse();
-        $response->setMessage(EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK);
-        $response->setParameters(['%order_items%' => 'test_name_01, test_name_02']);
+        $response = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK,
+            [
+                '%order_items%' => 'test_name_01, test_name_02'
+            ]
+        );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);
     }

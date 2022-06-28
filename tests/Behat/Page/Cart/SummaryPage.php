@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\CustomerReorderPlugin\Behat\Page\Cart;
 
 use Behat\Mink\Element\NodeElement;
-use \Sylius\Behat\Page\Shop\Cart\SummaryPage as BaseSummaryPage;
+use Sylius\Behat\Page\Shop\Cart\SummaryPage as BaseSummaryPage;
 
 final class SummaryPage extends BaseSummaryPage implements SummaryPageInterface
 {

@@ -95,11 +95,12 @@ final class ReorderPromotionsEligibilityCheckerSpec extends ObjectBehavior
             'test_promotion_02',
         ])->willReturn('test_promotion_01, test_promotion_02');
 
-        $response = new ReorderEligibilityCheckerResponse();
-        $response->setMessage(EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED);
-        $response->setParameters([
-            '%promotion_names%' => 'test_promotion_01, test_promotion_02',
-        ]);
+        $response = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::REORDER_PROMOTIONS_CHANGED,
+            [
+                '%promotion_names%' => 'test_promotion_01, test_promotion_02',
+            ]
+        );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);
     }

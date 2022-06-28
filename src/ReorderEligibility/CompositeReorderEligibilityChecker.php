@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Sylius\CustomerReorderPlugin\ReorderEligibility;
 
+use Laminas\Stdlib\PriorityQueue;
 use Sylius\Component\Core\Model\OrderInterface;
-use Zend\Stdlib\PriorityQueue;
+use Webmozart\Assert\Assert;
 
 final class CompositeReorderEligibilityChecker implements ReorderEligibilityChecker
 {
-    /** @var PriorityQueue|ReorderEligibilityChecker[] */
+    /** @var PriorityQueue<ReorderEligibilityChecker, int> */
     private $eligibilityCheckers;
 
     public function __construct()
     {
-        $this->eligibilityCheckers = new PriorityQueue();
+        /** @var PriorityQueue<ReorderEligibilityChecker, int> $priorityQueue */
+        $priorityQueue = new PriorityQueue();
+        $this->eligibilityCheckers = $priorityQueue;
     }
 
     public function addChecker(ReorderEligibilityChecker $eligibilityChecker, int $priority = 0): void
@@ -22,16 +25,16 @@ final class CompositeReorderEligibilityChecker implements ReorderEligibilityChec
         $this->eligibilityCheckers->insert($eligibilityChecker, $priority);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
         $eligibilityCheckersFailures = [];
 
+        /** @var mixed|ReorderEligibilityChecker $eligibilityChecker */
         foreach ($this->eligibilityCheckers as $eligibilityChecker) {
+            Assert::isInstanceOf($eligibilityChecker, ReorderEligibilityChecker::class);
             $eligibilityCheckersFailures = array_merge(
-                $eligibilityCheckersFailures, $eligibilityChecker->check($order, $reorder)
+                $eligibilityCheckersFailures,
+                $eligibilityChecker->check($order, $reorder),
             );
         }
 

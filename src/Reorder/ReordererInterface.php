@@ -13,6 +13,6 @@ interface ReordererInterface
     public function reorder(
         OrderInterface $order,
         ChannelInterface $channel,
-        CustomerInterface $customer
+        CustomerInterface $customer,
     ): OrderInterface;
 }

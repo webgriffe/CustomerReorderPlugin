@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\CustomerReorderPlugin\Behat\Page\Order;
 
 use Behat\Mink\Element\NodeElement;
-use \Sylius\Behat\Page\Shop\Account\Order\IndexPage as BaseIndexPage;
+use Sylius\Behat\Page\Shop\Account\Order\IndexPage as BaseIndexPage;
 
 final class IndexPage extends BaseIndexPage implements IndexPageInterface
 {

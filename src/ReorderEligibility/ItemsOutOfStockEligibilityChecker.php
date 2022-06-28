@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sylius\CustomerReorderPlugin\ReorderEligibility;
 
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\EligibilityCheckerFailureResponses;
@@ -20,7 +19,7 @@ final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityCheck
 
     public function __construct(
         ReorderEligibilityConstraintMessageFormatterInterface $reorderEligibilityConstraintMessageFormatter,
-        AvailabilityCheckerInterface $availabilityChecker
+        AvailabilityCheckerInterface $availabilityChecker,
     ) {
         $this->reorderEligibilityConstraintMessageFormatter = $reorderEligibilityConstraintMessageFormatter;
         $this->availabilityChecker = $availabilityChecker;
@@ -30,7 +29,6 @@ final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityCheck
     {
         $productsOutOfStock = [];
 
-        /** @var OrderItemInterface $orderItem */
         foreach ($order->getItems()->getValues() as $orderItem) {
             if (null === $orderItem->getVariant()) {
                 continue;
@@ -43,16 +41,16 @@ final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityCheck
             }
         }
 
-        if (empty($productsOutOfStock)) {
+        if (0 === count($productsOutOfStock)) {
             return [];
         }
 
-        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse();
-
-        $eligibilityCheckerResponse->setMessage(EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK);
-        $eligibilityCheckerResponse->setParameters([
-            '%order_items%' => $this->reorderEligibilityConstraintMessageFormatter->format($productsOutOfStock),
-        ]);
+        $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::ITEMS_OUT_OF_STOCK,
+            [
+                '%order_items%' => $this->reorderEligibilityConstraintMessageFormatter->format($productsOutOfStock),
+            ],
+        );
 
         return [$eligibilityCheckerResponse];
     }

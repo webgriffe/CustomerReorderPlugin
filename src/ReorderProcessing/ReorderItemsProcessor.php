@@ -10,6 +10,7 @@ use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Sylius\Component\Order\Modifier\OrderModifierInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class ReorderItemsProcessor implements ReorderProcessor
 {
@@ -29,7 +30,7 @@ final class ReorderItemsProcessor implements ReorderProcessor
         OrderItemQuantityModifierInterface $orderItemQuantityModifier,
         OrderModifierInterface $orderModifier,
         AvailabilityCheckerInterface $availabilityChecker,
-        FactoryInterface $orderItemFactory
+        FactoryInterface $orderItemFactory,
     ) {
         $this->orderItemQuantityModifier = $orderItemQuantityModifier;
         $this->orderModifier = $orderModifier;
@@ -41,18 +42,19 @@ final class ReorderItemsProcessor implements ReorderProcessor
     {
         $orderItems = $order->getItems();
 
-        /** @var OrderItemInterface $orderItem */
         foreach ($orderItems as $orderItem) {
-            if (null === $orderItem->getVariant() ||
-                !$this->availabilityChecker->isStockAvailable($orderItem->getVariant())
+            $productVariant = $orderItem->getVariant();
+            if (null === $productVariant ||
+                !$this->availabilityChecker->isStockAvailable($productVariant)
             ) {
                 continue;
             }
-
-            $reorderItemQuantity = 0;
-
-            if (!$this->availabilityChecker->isStockSufficient($orderItem->getVariant(), $orderItem->getQuantity())) {
-                $reorderItemQuantity = $orderItem->getVariant()->getOnHand() - $orderItem->getVariant()->getOnHold();
+            if (!$this->availabilityChecker->isStockSufficient($productVariant, $orderItem->getQuantity())) {
+                $onHand = $productVariant->getOnHand();
+                Assert::integer($onHand);
+                $onHold = $productVariant->getOnHold();
+                Assert::integer($onHold);
+                $reorderItemQuantity = $onHand - $onHold;
             } else {
                 $reorderItemQuantity = $orderItem->getQuantity();
             }
@@ -60,7 +62,7 @@ final class ReorderItemsProcessor implements ReorderProcessor
             /** @var OrderItemInterface $newItem */
             $newItem = $this->orderItemFactory->createNew();
 
-            $newItem->setVariant($orderItem->getVariant());
+            $newItem->setVariant($productVariant);
             $newItem->setUnitPrice($orderItem->getUnitPrice());
             $newItem->setProductName($orderItem->getProductName());
             $newItem->setVariantName($orderItem->getVariantName());

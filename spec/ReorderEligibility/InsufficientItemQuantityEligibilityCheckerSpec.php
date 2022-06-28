@@ -107,11 +107,12 @@ final class InsufficientItemQuantityEligibilityCheckerSpec extends ObjectBehavio
         $reorderEligibilityConstraintMessageFormatter->format(['test_product_name_01', 'test_product_name_02'])
             ->willReturn('test_product_name_01, test_product_name_02');
 
-        $response = new ReorderEligibilityCheckerResponse();
-        $response->setMessage(EligibilityCheckerFailureResponses::INSUFFICIENT_ITEM_QUANTITY);
-        $response->setParameters([
-            '%order_items%' => 'test_product_name_01, test_product_name_02',
-        ]);
+        $response = new ReorderEligibilityCheckerResponse(
+            EligibilityCheckerFailureResponses::INSUFFICIENT_ITEM_QUANTITY,
+            [
+                '%order_items%' => 'test_product_name_01, test_product_name_02',
+            ]
+        );
 
         $this->check($order, $reorder)->shouldBeLike([$response]);
     }

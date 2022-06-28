@@ -28,6 +28,7 @@ class ReorderEligibilityCheckerResponse
         return $this->parameters;
     }
 
+    /** @param array<string, string> $parameters */
     public function setParameters(array $parameters): void
     {
         $this->parameters = $parameters;

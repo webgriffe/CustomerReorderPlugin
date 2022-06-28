@@ -68,9 +68,9 @@ final class ReorderContext implements Context
     {
         $this->summaryPage->doesFlashMessageWithTextExists(
             sprintf(
-            'Following items: %s are out of stock, which have affected order total.',
-            $this->reorderEligibilityConstraintMessageFormatter->format($products),
-        ),
+                'Following items: %s are out of stock, which have affected order total.',
+                $this->reorderEligibilityConstraintMessageFormatter->format($products),
+            ),
         );
     }
 
@@ -94,9 +94,9 @@ final class ReorderContext implements Context
     {
         $this->summaryPage->doesFlashMessageWithTextExists(
             sprintf(
-            'Prices of products: %s have changed, which have affected order total.',
-            $orderItemName,
-        ),
+                'Prices of products: %s have changed, which have affected order total.',
+                $orderItemName,
+            ),
         );
     }
 
@@ -115,9 +115,9 @@ final class ReorderContext implements Context
     {
         $this->summaryPage->doesFlashMessageWithTextExists(
             sprintf(
-            'Following promotions: %s are no longer enabled, which have affected order total.',
-            $promotionName,
-        ),
+                'Following promotions: %s are no longer enabled, which have affected order total.',
+                $promotionName,
+            ),
         );
     }
 

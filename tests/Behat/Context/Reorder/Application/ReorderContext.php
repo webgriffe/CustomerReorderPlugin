@@ -12,6 +12,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\CustomerReorderPlugin\Reorder\ReordererInterface;
+use Webmozart\Assert\Assert;
 
 final class ReorderContext implements Context
 {
@@ -32,9 +33,11 @@ final class ReorderContext implements Context
 
         /** @var CustomerInterface $customer */
         $customer = $this->customerRepository->findOneBy(['email' => $customerEmail]);
+        $channel = $order->getChannel();
+        Assert::notNull($channel);
 
         try {
-            $this->reorderer->reorder($order, $order->getChannel(), $customer);
+            $this->reorderer->reorder($order, $channel, $customer);
         } catch (InvalidArgumentException $exception) {
             return;
         }

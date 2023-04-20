@@ -19,4 +19,9 @@ final class SyliusCustomerReorderPlugin extends Bundle
         $container->addCompilerPass(new RegisterEligibilityCheckersPass());
         $container->addCompilerPass(new RegisterReorderProcessorsPass());
     }
+
+    public function getPath(): string
+    {
+        return __DIR__;
+    }
 }

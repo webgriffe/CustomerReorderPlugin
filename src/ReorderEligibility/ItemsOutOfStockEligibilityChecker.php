@@ -19,6 +19,7 @@ final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityCheck
 
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
+        /** @var string[] $productsOutOfStock */
         $productsOutOfStock = [];
 
         foreach ($order->getItems()->getValues() as $orderItem) {
@@ -29,7 +30,7 @@ final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityCheck
             /** @var ProductVariantInterface $productVariant */
             $productVariant = $orderItem->getVariant();
             if (!$this->availabilityChecker->isStockAvailable($productVariant)) {
-                $productsOutOfStock[] = $orderItem->getProductName();
+                $productsOutOfStock[] = (string) $orderItem->getProductName();
             }
         }
 

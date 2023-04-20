@@ -23,12 +23,13 @@ final class ReorderPromotionsEligibilityChecker implements ReorderEligibilityChe
             return [];
         }
 
+        /** @var string[] $disabledPromotions */
         $disabledPromotions = [];
 
         /** @var PromotionInterface $promotion */
         foreach ($order->getPromotions()->getValues() as $promotion) {
             if (!in_array($promotion, $reorder->getPromotions()->getValues(), true)) {
-                $disabledPromotions[] = $promotion->getName();
+                $disabledPromotions[] = (string) $promotion->getName();
             }
         }
 

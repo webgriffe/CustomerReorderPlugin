@@ -9,14 +9,15 @@ use Sylius\CustomerReorderPlugin\ReorderEligibility\ReorderEligibilityCheckerRes
 use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\EligibilityCheckerFailureResponses;
 use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\ReorderEligibilityCheckerResponseProcessor;
 use Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\ReorderEligibilityCheckerResponseProcessorInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class ReorderEligibilityCheckerResponseProcessorSpec extends ObjectBehavior
 {
-    public function let(Session $session): void
+    public function let(RequestStack $requestStack): void
     {
-        $this->beConstructedWith($session);
+        $this->beConstructedWith($requestStack);
     }
 
     public function it_is_initializable(): void
@@ -33,6 +34,7 @@ final class ReorderEligibilityCheckerResponseProcessorSpec extends ObjectBehavio
         ReorderEligibilityCheckerResponse $firstResponse,
         ReorderEligibilityCheckerResponse $secondResponse,
         ReorderEligibilityCheckerResponse $thirdResponse,
+        RequestStack $requestStack,
         Session $session,
         FlashBagInterface $flashBag,
     ): void {
@@ -45,6 +47,7 @@ final class ReorderEligibilityCheckerResponseProcessorSpec extends ObjectBehavio
         $thirdResponse->getMessage()->willReturn(EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED);
         $thirdResponse->getParameters()->willReturn(['%order_total%' => '$100.00']);
 
+        $requestStack->getSession()->willReturn($session);
         $session->getFlashBag()->willReturn($flashBag);
 
         $flashBag->add('info', [

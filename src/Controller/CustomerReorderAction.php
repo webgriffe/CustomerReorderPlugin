@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class CustomerReorderAction
@@ -46,7 +47,10 @@ final class CustomerReorderAction
         try {
             $reorder = $this->reorderer->reorder($order, $channel, $customer);
         } catch (InvalidArgumentException $exception) {
-            $this->requestStack->getSession()->getFlashBag()->add('info', $exception->getMessage());
+            $session = $this->requestStack->getSession();
+            if ($session instanceof Session) {
+                $session->getFlashBag()->add('info', $exception->getMessage());
+            }
 
             return new RedirectResponse($this->urlGenerator->generate('sylius_shop_account_order_index'));
         }

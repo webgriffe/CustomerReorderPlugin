@@ -19,7 +19,8 @@
     "require": {
         "php": "^8.0",
         "sylius/sylius": "^1.12",
-        "sylius/mailer-bundle":  "^1.8 || ^2.0",
+        "sylius/mailer-bundle": "^1.8 || ^2.0",
+        "symfony/http-foundation": "^5.4 || ^6.0",
         "symfony/webpack-encore-bundle": "^1.15"
     },
     "require-dev": {

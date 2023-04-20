@@ -18,10 +18,13 @@ final class ReorderEligibilityCheckerResponseProcessor implements ReorderEligibi
     {
         /** @var ReorderEligibilityCheckerResponse $response */
         foreach ($responses as $response) {
-            $this->requestStack->getSession()->getFlashBag()->add('info', [
-                'message' => $response->getMessage(),
-                'parameters' => $response->getParameters(),
-            ]);
+            $session = $this->requestStack->getSession();
+            if ($session instanceof Session) {
+                $session->getFlashBag()->add('info', [
+                    'message' => $response->getMessage(),
+                    'parameters' => $response->getParameters(),
+                ]);
+            }
         }
     }
 }

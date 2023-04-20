@@ -14,6 +14,9 @@ use Webmozart\Assert\Assert;
 
 final class ReorderItemsProcessor implements ReorderProcessor
 {
+    /**
+     * @param FactoryInterface<OrderItemInterface> $orderItemFactory
+     */
     public function __construct(
         private OrderItemQuantityModifierInterface $orderItemQuantityModifier,
         private OrderModifierInterface $orderModifier,
@@ -42,8 +45,6 @@ final class ReorderItemsProcessor implements ReorderProcessor
             } else {
                 $reorderItemQuantity = $orderItem->getQuantity();
             }
-
-            /** @var OrderItemInterface $newItem */
             $newItem = $this->orderItemFactory->createNew();
 
             $newItem->setVariant($productVariant);

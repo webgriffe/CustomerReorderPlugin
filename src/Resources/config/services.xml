@@ -11,7 +11,7 @@
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="Sylius\CustomerReorderPlugin\Reorder\Reorderer" />
             <argument type="service" id="router" />
-            <argument type="service" id="session" />
+            <argument type="service" id="request_stack" />
         </service>
         <service id="Sylius\CustomerReorderPlugin\Reorder\Reorderer">
             <argument type="service" id="Sylius\CustomerReorderPlugin\Factory\OrderFactory" />
@@ -61,7 +61,7 @@
         <service id="Sylius\CustomerReorderPlugin\ReorderEligibility\ReorderEligibilityConstraintMessageFormatter" />
 
         <service id="Sylius\CustomerReorderPlugin\ReorderEligibility\ResponseProcessing\ReorderEligibilityCheckerResponseProcessor">
-            <argument type="service" id="session"/>
+            <argument type="service" id="request_stack"/>
         </service>
 
         <service id="Sylius\CustomerReorderPlugin\Checker\OrderCustomerRelationChecker" />

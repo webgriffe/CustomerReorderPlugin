@@ -16,12 +16,13 @@ final class ReorderDataProvider implements ReorderProcessor
         $reorder->setNotes($order->getNotes());
         $reorder->setLocaleCode($order->getLocaleCode());
 
-        /** @var AddressInterface $billingAddress */
         $billingAddress = $order->getBillingAddress();
-
-        /** @var AddressInterface $shippingAddress */
+        if ($billingAddress !== null) {
+            $reorder->setBillingAddress(clone $billingAddress);
+        }
         $shippingAddress = $order->getShippingAddress();
-        $reorder->setBillingAddress(clone $billingAddress);
-        $reorder->setShippingAddress(clone $shippingAddress);
+        if ($shippingAddress !== null) {
+            $reorder->setShippingAddress(clone $shippingAddress);
+        }
     }
 }

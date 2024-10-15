@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\CustomerReorderPlugin\ReorderProcessing;
 
-use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 
 final class ReorderDataProvider implements ReorderProcessor

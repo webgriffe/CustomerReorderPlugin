@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Sylius\CustomerReorderPlugin\ReorderProcessing;
 
+if (!interface_exists(\Sylius\Resource\Factory\FactoryInterface::class)) {
+    class_alias(\Sylius\Component\Resource\Factory\FactoryInterface::class, \Sylius\Resource\Factory\FactoryInterface::class);
+}
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Sylius\Component\Order\Modifier\OrderModifierInterface;
-use Sylius\Component\Resource\Factory\FactoryInterface;
+use Sylius\Resource\Factory\FactoryInterface;
 use Webmozart\Assert\Assert;
 
 final class ReorderItemsProcessor implements ReorderProcessor

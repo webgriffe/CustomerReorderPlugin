@@ -1,0 +1,31 @@
+imports:
+    - { resource: "@SyliusCustomerReorderPlugin/config/app/config.yaml" }
+    - { resource: "services_test.php" }
+
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    TestApplication:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/../../../tests/TestApplication/src/Entity'
+                        prefix: Tests\Sylius\CustomerReorderPlugin
+
+sylius_grid:
+    grids:
+        sylius_shop_account_order:
+            actions:
+                item:
+                    reorder:
+                        type: reorder
+                        label: sylius_customer_reorder_plugin.ui.reorder
+                        options:
+                            link:
+                                route: sylius_reorder_plugin_reorder
+                                parameters:
+                                    id: resource.id
+    templates:
+        action:
+            reorder: "@SyliusCustomerReorderPlugin/reorder.html.twig"

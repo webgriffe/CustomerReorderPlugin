@@ -17,7 +17,7 @@
 
     ```yaml
     sylius_customer_reorder:
-        resource: "@SyliusCustomerReorderPlugin/Resources/config/app/reorder_routing.yml"
+        resource: "@SyliusCustomerReorderPlugin/Resources/config/app_routing.yaml"
     ```
 
 4. Add plugin class to your `AppKernel`:

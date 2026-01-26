@@ -1,0 +1,17 @@
+sylius_grid:
+    grids:
+        sylius_shop_account_order:
+            actions:
+                item:
+                    reorder:
+                        type: reorder
+                        label: sylius_customer_reorder_plugin.ui.reorder
+                        options:
+                            link:
+                                route: sylius_reorder_plugin_reorder
+                                parameters:
+                                    id: resource.id
+#TODO migrate to twig_hooks
+#    templates:
+#        action:
+#            reorder: "@SyliusCustomerReorderPlugin/reorder.html.twig"

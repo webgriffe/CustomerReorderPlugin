@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Sylius\CustomerReorderPlugin\DependencyInjection;
+
+use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+
+final class SyliusCustomerReorderExtension extends AbstractResourceExtension implements PrependExtensionInterface
+{
+    use PrependDoctrineMigrationsTrait;
+
+    #[\Override]
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
+
+        $loader->load('services.php');
+    }
+
+    #[\Override]
+    public function prepend(ContainerBuilder $container): void
+    {
+        $this->prependDoctrineMigrations($container);
+    }
+
+    #[\Override]
+    protected function getMigrationsNamespace(): string
+    {
+        return 'Sylius\CustomerReorderPlugin\Migrations';
+    }
+
+    #[\Override]
+    protected function getMigrationsDirectory(): string
+    {
+        return '@SyliusCustomerReorderPlugin/src/Migrations';
+    }
+
+    #[\Override]
+    protected function getNamespacesOfMigrationsExecutedBefore(): array
+    {
+        return ['Sylius\Bundle\CoreBundle\Migrations'];
+    }
+}

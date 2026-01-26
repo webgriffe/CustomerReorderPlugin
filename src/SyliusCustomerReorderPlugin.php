@@ -10,18 +10,23 @@ use Sylius\CustomerReorderPlugin\DependencyInjection\Compiler\RegisterReorderPro
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @psalm-api
+ */
 final class SyliusCustomerReorderPlugin extends Bundle
 {
     use SyliusPluginTrait;
 
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new RegisterEligibilityCheckersPass());
         $container->addCompilerPass(new RegisterReorderProcessorsPass());
     }
 
+    #[\Override]
     public function getPath(): string
     {
-        return __DIR__;
+        return \dirname(__DIR__);
     }
 }

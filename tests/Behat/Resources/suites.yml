@@ -29,7 +29,7 @@ default:
                 - sylius.behat.context.ui.shop.checkout.addressing
 
             filters:
-                tags: "@reordering && @ui"
+                tags: "@reordering&&@ui"
 
         reorders_application:
             contexts:
@@ -62,4 +62,4 @@ default:
                 - sylius.behat.context.ui.shop.checkout.addressing
 
             filters:
-                tags: "@reordering && @application"
+                tags: "@reordering&&@application"

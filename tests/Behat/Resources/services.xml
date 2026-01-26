@@ -9,7 +9,7 @@
             <argument type="service" id="sylius.behat.page.shop.checkout.address"/>
             <argument type="service" id="sylius_customer_reorder.behat.page.shop.checkout"/>
             <argument type="service" id="sylius_customer_reorder.behat.page.shop.account.order.index" />
-            <argument type="service" id="sylius.product_variant_resolver.default" />
+            <argument type="service" id="sylius.resolver.product_variant.default" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 

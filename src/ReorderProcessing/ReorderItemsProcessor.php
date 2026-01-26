@@ -28,6 +28,7 @@ final class ReorderItemsProcessor implements ReorderProcessor
     ) {
     }
 
+    #[\Override]
     public function process(OrderInterface $order, OrderInterface $reorder): void
     {
         $orderItems = $order->getItems();

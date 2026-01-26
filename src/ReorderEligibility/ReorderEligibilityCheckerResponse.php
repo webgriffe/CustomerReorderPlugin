@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Sylius\CustomerReorderPlugin\ReorderEligibility;
 
+/**
+ * @psalm-api
+ */
 class ReorderEligibilityCheckerResponse
 {
     /** @param array<string, string> $parameters */

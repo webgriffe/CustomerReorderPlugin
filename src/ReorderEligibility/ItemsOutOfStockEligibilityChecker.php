@@ -17,6 +17,7 @@ final class ItemsOutOfStockEligibilityChecker implements ReorderEligibilityCheck
     ) {
     }
 
+    #[\Override]
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
         /** @var string[] $productsOutOfStock */

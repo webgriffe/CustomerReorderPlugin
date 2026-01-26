@@ -14,6 +14,7 @@ final class TotalReorderAmountEligibilityChecker implements ReorderEligibilityCh
     {
     }
 
+    #[\Override]
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
         if ($order->getTotal() === $reorder->getTotal()) {

@@ -6,6 +6,7 @@ namespace Sylius\CustomerReorderPlugin\ReorderEligibility;
 
 final class ReorderEligibilityConstraintMessageFormatter implements ReorderEligibilityConstraintMessageFormatterInterface
 {
+    #[\Override]
     public function format(array $messageParameters): string
     {
         $message = '';

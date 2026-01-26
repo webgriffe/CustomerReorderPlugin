@@ -8,6 +8,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 
 final class ReorderDataProvider implements ReorderProcessor
 {
+    #[\Override]
     public function process(OrderInterface $order, OrderInterface $reorder): void
     {
         $reorder->setCustomer($order->getCustomer());

@@ -21,6 +21,7 @@ final class OrderFactory implements OrderFactoryInterface
     {
     }
 
+    #[\Override]
     public function createFromExistingOrder(OrderInterface $order, ChannelInterface $channel): OrderInterface
     {
         $reorder = $this->baseOrderFactory->createNew();

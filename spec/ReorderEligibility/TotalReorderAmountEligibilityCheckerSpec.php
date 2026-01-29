@@ -33,8 +33,8 @@ final class TotalReorderAmountEligibilityCheckerSpec extends ObjectBehavior
         OrderInterface $order,
         OrderInterface $reorder,
     ): void {
-        $order->getTotal()->willReturn(100);
-        $reorder->getTotal()->willReturn(100);
+        $order->getItemsTotal()->willReturn(100);
+        $reorder->getItemsTotal()->willReturn(100);
 
         $response = $this->check($order, $reorder);
         $response->shouldBeEqualTo([]);
@@ -45,9 +45,9 @@ final class TotalReorderAmountEligibilityCheckerSpec extends ObjectBehavior
         OrderInterface $reorder,
         MoneyFormatterInterface $moneyFormatter,
     ): void {
-        $order->getTotal()->willReturn(100);
+        $order->getItemsTotal()->willReturn(100);
         $order->getCurrencyCode()->willReturn('USD');
-        $reorder->getTotal()->willReturn(150);
+        $reorder->getItemsTotal()->willReturn(150);
 
         $moneyFormatter->format(100, 'USD')->willReturn('$100.00');
 

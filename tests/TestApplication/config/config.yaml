@@ -1,5 +1,5 @@
 imports:
-    - { resource: "@SyliusCustomerReorderPlugin/config/app/config.yaml" }
+    - { resource: "@SyliusCustomerReorderPlugin/config/config.yaml" }
     - { resource: "services_test.php" }
 
 doctrine:

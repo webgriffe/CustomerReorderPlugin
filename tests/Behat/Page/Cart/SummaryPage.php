@@ -16,12 +16,12 @@ final class SummaryPage extends BaseSummaryPage implements SummaryPageInterface
 
     public function countFlashMessages(): int
     {
-        return count($this->getSession()->getPage()->findAll('css', '.sylius-flash-message'));
+        return count($this->getSession()->getPage()->findAll('css', '[data-test-sylius-flash-message]'));
     }
 
     public function doesFlashMessageWithTextExists(string $text): bool
     {
-        $notifications = $this->getSession()->getPage()->findAll('css', '.sylius-flash-message');
+        $notifications = $this->getSession()->getPage()->findAll('css', '[data-test-sylius-flash-message]');
 
         if (0 === count($notifications)) {
             return false;

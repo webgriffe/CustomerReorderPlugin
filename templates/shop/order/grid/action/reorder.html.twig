@@ -1,0 +1,13 @@
+{% import '@SyliusShop/shared/buttons.html.twig' as buttons %}
+
+{% set path = options.link.url|default(path(options.link.route|default(grid.requestConfiguration.getRouteName('reorder')), options.link.parameters|default({'id': data.id}))) %}
+{% set icon = action.options.icon is defined ? action.options.icon : null %}
+
+<form action="{{ path }}" method="POST">
+    <button class="btn btn-sm btn-outline-gray {% if icon is not empty %}btn-icon{% endif %}">
+        {% if icon is not empty %}
+            {{ ux_icon(icon, { class: 'icon icon-sm' }) }}
+        {% endif %}
+        {{ action.label|trans }}
+    </button>
+</form>

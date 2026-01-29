@@ -11,7 +11,6 @@ sylius_grid:
                                 route: sylius_reorder_plugin_reorder
                                 parameters:
                                     id: resource.id
-#TODO migrate to twig_hooks
-#    templates:
-#        action:
-#            reorder: "@SyliusCustomerReorderPlugin/reorder.html.twig"
+    templates:
+        action:
+            reorder: "@SyliusCustomerReorderPlugin/shop/order/grid/action/reorder.html.twig"

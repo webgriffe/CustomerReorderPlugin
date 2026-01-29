@@ -26,6 +26,3 @@ sylius_grid:
                                 route: sylius_reorder_plugin_reorder
                                 parameters:
                                     id: resource.id
-    templates:
-        action:
-            reorder: "@SyliusCustomerReorderPlugin/reorder.html.twig"

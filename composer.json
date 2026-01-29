@@ -1,15 +1,15 @@
 {
-    "name": "sylius/customer-reorder-plugin",
+    "name": "webgriffe/customer-reorder-plugin",
     "type": "sylius-plugin",
     "description": "Sylius plugin that enables order reordering for a customer",
     "authors": [
         {
-            "name": "Bartosz Pietrzak",
-            "homepage": "https://github.com/bartoszpietrzak1994"
-        },
-        {
             "name": "Webgriffe SRL",
             "homepage": "https://github.com/webgriffe/"
+        },
+        {
+            "name": "Bartosz Pietrzak",
+            "homepage": "https://github.com/bartoszpietrzak1994"
         }
     ],
     "keywords": [

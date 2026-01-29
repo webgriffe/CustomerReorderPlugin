@@ -30,7 +30,7 @@ Once the Reorder process is completed, the newly created Order is listed in the 
 
 ## Installation
 
-1. Run `composer require webgriffe/customer-reorder-plugin`: it's normal that the "cache:clear" command, that is executed automatically at the end, fails because you have to do the next steps.
+1. Run `composer require webgriffe/sylius-customer-reorder-plugin`: it's normal that the "cache:clear" command, that is executed automatically at the end, fails because you have to do the next steps.
 
 2. If they have not been added automatically, you have to add these bundles to `config/bundles.php` file:
 

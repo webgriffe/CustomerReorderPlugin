@@ -14,15 +14,16 @@ final class TotalReorderAmountEligibilityChecker implements ReorderEligibilityCh
     {
     }
 
+    #[\Override]
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
-        if ($order->getTotal() === $reorder->getTotal()) {
+        if ($order->getItemsTotal() === $reorder->getItemsTotal()) {
             return [];
         }
 
         /** @var string $currencyCode */
         $currencyCode = $order->getCurrencyCode();
-        $formattedTotal = $this->moneyFormatter->format($order->getTotal(), $currencyCode);
+        $formattedTotal = $this->moneyFormatter->format($order->getItemsTotal(), $currencyCode);
 
         $eligibilityCheckerResponse = new ReorderEligibilityCheckerResponse(
             EligibilityCheckerFailureResponses::TOTAL_AMOUNT_CHANGED,

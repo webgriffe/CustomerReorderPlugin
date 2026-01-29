@@ -9,6 +9,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 
 final class OrderCustomerRelationChecker implements OrderCustomerRelationCheckerInterface
 {
+    #[\Override]
     public function wasOrderPlacedByCustomer(OrderInterface $order, CustomerInterface $customer): bool
     {
         /** @var CustomerInterface|null $orderCustomer */

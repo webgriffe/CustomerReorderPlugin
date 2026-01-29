@@ -25,6 +25,7 @@ final class CompositeReorderEligibilityChecker implements ReorderEligibilityChec
         $this->eligibilityCheckers->insert($eligibilityChecker, $priority);
     }
 
+    #[\Override]
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
         $eligibilityCheckersFailures = [];

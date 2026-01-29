@@ -25,6 +25,7 @@ final class CompositeReorderProcessor implements ReorderProcessor
         $this->reorderProcessors->insert($orderProcessor, $priority);
     }
 
+    #[\Override]
     public function process(OrderInterface $order, OrderInterface $reorder): void
     {
         /** @var mixed|ReorderProcessor $reorderProcessor */

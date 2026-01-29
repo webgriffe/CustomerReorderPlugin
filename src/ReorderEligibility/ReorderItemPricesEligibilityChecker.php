@@ -15,6 +15,7 @@ final class ReorderItemPricesEligibilityChecker implements ReorderEligibilityChe
     ) {
     }
 
+    #[\Override]
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
         $orderProductNamesToTotal = [];

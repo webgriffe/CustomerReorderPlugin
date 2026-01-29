@@ -14,6 +14,7 @@ final class ReorderEligibilityCheckerResponseProcessor implements ReorderEligibi
     {
     }
 
+    #[\Override]
     public function process(array $responses): void
     {
         /** @var ReorderEligibilityCheckerResponse $response */

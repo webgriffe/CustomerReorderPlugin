@@ -25,6 +25,7 @@ final class Reorderer implements ReordererInterface
     ) {
     }
 
+    #[\Override]
     public function reorder(
         OrderInterface $order,
         ChannelInterface $channel,

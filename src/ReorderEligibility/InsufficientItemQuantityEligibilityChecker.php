@@ -15,6 +15,7 @@ final class InsufficientItemQuantityEligibilityChecker implements ReorderEligibi
     ) {
     }
 
+    #[\Override]
     public function check(OrderInterface $order, OrderInterface $reorder): array
     {
         $orderProductNamesToQuantity = [];

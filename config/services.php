@@ -101,6 +101,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     ;
 
     $services->set(ReorderDataProvider::class)
+        ->args([
+            service('doctrine.orm.entity_manager'),
+        ])
         ->tag('sylius_customer_reorder_plugin.reorder_processor', ['priority' => 10])
     ;
 
